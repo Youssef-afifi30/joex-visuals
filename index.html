@@ -489,6 +489,8 @@ img,video{max-width:100%}
   .service-card{padding:13px 10px!important}
 }
 
+.video-dialog.portrait-project #youtubePlayer{max-height:min(68vh,650px)}
+@media(max-width:680px){.video-dialog.portrait-project #youtubePlayer{height:min(54dvh,540px)}}
 </style>
 </head>
 <body>
@@ -728,7 +730,7 @@ img,video{max-width:100%}
 
 <footer class="footer"><div class="shell footer-content"><div><a class="brand" href="#top"><span class="brand-mark">JV<span class="brand-strike"></span></span><span class="brand-copy"><strong>JOEX<span>_</span>VISUALS</strong><small>VIDEO EDITOR / YOUSEF AFIFI</small></span></a><p>Cinematic video editing for creators, brands and modern campaigns.</p></div><div><h4>EXPLORE</h4><a href="#top">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#projects">Portfolio</a></div><div><h4>CREATIVE SERVICES</h4><a href="#services">AI Editing</a><a href="#services">Speed Ramp</a><a href="#services">Reels & After Effects</a></div><div><h4>LET'S WORK TOGETHER</h4><p>Have a video in mind? Tell me what you are creating.</p><a class="footer-email" href="mailto:joeafifi840@gmail.com?subject=Joex_Visuals%20Project%20Inquiry">joeafifi840@gmail.com</a><a class="footer-gmail" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=joeafifi840%40gmail.com&amp;su=Joex_Visuals%20Project%20Inquiry" target="_blank" rel="noopener noreferrer" aria-label="Write to Yousef Afifi using Gmail"><svg aria-hidden="true"><use href="#i-mail"/></svg>WRITE VIA GMAIL <svg aria-hidden="true"><use href="#i-up"/></svg></a><a class="footer-whatsapp" href="https://wa.me/201010190532?text=Hi%20Yousef%2C%20I%27d%20like%20to%20discuss%20a%20video%20editing%20project." target="_blank" rel="noopener noreferrer" aria-label="Chat with Yousef Afifi on WhatsApp"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg><span>WhatsApp: +20 101 019 0532</span></a><a class="footer-contact" href="#contact"><span>START A PROJECT</span><svg><use href="#i-up"/></svg></a></div></div><div class="shell footer-bottom"><span>© <span id="currentYear">2026</span> JOEX_VISUALS / YOUSEF AFIFI</span><span>CRAFTED FOR THE NEXT FRAME.</span><a href="#top">BACK TO TOP ↑</a></div></footer>
 
-<div class="video-dialog" id="videoDialog" role="dialog" aria-modal="true" aria-labelledby="videoTitle" aria-hidden="true"><div class="dialog-backdrop" data-close-video></div><div class="dialog-panel"><div class="dialog-header"><span class="eyebrow" id="videoKind">ORIGINAL PROJECT</span><button type="button" class="dialog-close" id="closeVideo" aria-label="Close video preview"><svg><use href="#i-close"/></svg></button></div><h3 id="videoTitle">JOEX_VISUALS / SHOWREEL</h3><video id="videoPlayer" controls playsinline preload="none"></video><p class="dialog-note" id="videoNote">Original portfolio project. Fullscreen and playback controls available.</p></div></div>
+<div class="video-dialog" id="videoDialog" role="dialog" aria-modal="true" aria-labelledby="videoTitle" aria-hidden="true"><div class="dialog-backdrop" data-close-video></div><div class="dialog-panel"><div class="dialog-header"><span class="eyebrow" id="videoKind">ORIGINAL PROJECT</span><button type="button" class="dialog-close" id="closeVideo" aria-label="Close video preview"><svg><use href="#i-close"/></svg></button></div><h3 id="videoTitle">JOEX_VISUALS / SHOWREEL</h3><video id="videoPlayer" controls playsinline preload="none"></video><iframe id="youtubePlayer" title="YouTube project video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" loading="lazy" style="display:none;width:100%;height:min(68vh,650px);aspect-ratio:9/16;background:#000;border:1px solid #3f1d29"></iframe><p class="dialog-note" id="videoNote">Original portfolio project. Fullscreen and playback controls available.</p></div></div>
 <script>
 'use strict';
 /* Client inquiries open Gmail compose in a new tab; no messages are sent automatically. */
@@ -738,6 +740,8 @@ const $ = (selector, from = document) => from.querySelector(selector);
 const $$ = (selector, from = document) => Array.from(from.querySelectorAll(selector));
 const dialog = $('#videoDialog');
 const player = $('#videoPlayer');
+const youtubePlayer = $('#youtubePlayer');
+const youtubeVideos = { 'edit-transformation.mp4': 'to87666y2Os' };
 const title = $('#videoTitle');
 const closeButton = $('#closeVideo');
 const videoKind = $('#videoKind');
@@ -750,8 +754,18 @@ function openVideo(fileName, displayTitle = 'JOEX_VISUALS / SHOWREEL') {
   if (!/^[a-z0-9-]+\.mp4$/i.test(fileName)) return;
   previousFocus = document.activeElement;
   player.pause();
-  player.src = ASSET_ROOT + fileName;
-  player.load();
+  const youtubeId = youtubeVideos[fileName];
+  youtubePlayer.src = 'about:blank';
+  youtubePlayer.style.display = youtubeId ? 'block' : 'none';
+  player.style.display = youtubeId ? 'none' : 'block';
+  if (youtubeId) {
+    player.removeAttribute('src');
+    player.load();
+    youtubePlayer.src = 'https://www.youtube-nocookie.com/embed/' + youtubeId + '?autoplay=1&rel=0&playsinline=1';
+  } else {
+    player.src = ASSET_ROOT + fileName;
+    player.load();
+  }
   title.textContent = displayTitle;
   const uploadedProjectInfo = {
     'ae-kinetic-typography.mp4': { kind: 'ADVANCED AFTER EFFECTS · ORIGINAL WORK', note: 'KINETIC TYPOGRAPHY · Typography-driven visual edit with animated copy and transitions. 21 sec · 9:16. Fullscreen, sound and playback controls available.' },
@@ -788,13 +802,14 @@ function openVideo(fileName, displayTitle = 'JOEX_VISUALS / SHOWREEL') {
   dialog.setAttribute('aria-hidden', 'false');
   document.body.classList.add('modal-open');
   closeButton.focus();
-  player.play().catch(() => {});
+  if (!youtubeId) player.play().catch(() => {});
 }
 function closeVideo() {
   if (!dialog.classList.contains('open')) return;
   player.pause();
   player.removeAttribute('src');
   player.load();
+  youtubePlayer.src = 'about:blank';
   dialog.classList.remove('open');
   dialog.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('modal-open');
@@ -807,7 +822,7 @@ window.addEventListener('keydown', event => {
   if (!dialog.classList.contains('open')) return;
   if (event.key === 'Escape') { event.preventDefault(); closeVideo(); }
   if (event.key === 'Tab') {
-    const focusable = [closeButton, player].filter(Boolean);
+    const focusable = [closeButton, youtubePlayer.style.display === 'block' ? youtubePlayer : player].filter(Boolean);
     const index = focusable.indexOf(document.activeElement);
     if (event.shiftKey && index <= 0) { event.preventDefault(); focusable.at(-1).focus(); }
     else if (!event.shiftKey && index === focusable.length - 1) { event.preventDefault(); focusable[0].focus(); }
