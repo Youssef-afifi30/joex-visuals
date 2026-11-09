@@ -44,6 +44,10 @@ body.modal-open{overflow:hidden}a{color:inherit;text-decoration:none}button,inpu
 .video-dialog.portrait-project .dialog-panel{width:min(94vw,510px)}
 .video-dialog.portrait-project #videoPlayer{display:block;width:100%;max-height:min(68vh,650px);background:#050506;object-fit:contain;aspect-ratio:9/16}
 .video-dialog.portrait-project .dialog-note{line-height:1.5}
+/* YouTube embeds inside the existing project preview dialog */
+#youtubePlayer{display:none;width:100%;aspect-ratio:16/9;max-height:min(69vh,570px);border:1px solid #3f1d29;background:#000}
+.video-dialog .dialog-panel:has(#youtubePlayer[style*="display: block"]){width:min(94vw,900px)}
+@media(max-width:680px){#youtubePlayer{max-height:52dvh}}
 /* Dialog */
 .video-dialog{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:20px}.video-dialog.open{display:flex}.dialog-backdrop{position:absolute;inset:0;background:#020103e9;backdrop-filter:blur(15px)}.dialog-panel{position:relative;width:min(94vw,900px);background:#10090e;border:1px solid #94303f;box-shadow:0 0 100px #cf12394d,0 30px 110px #000;border-radius:2px;padding:24px}.dialog-header{display:flex;justify-content:space-between;align-items:center;gap:20px}.dialog-close{width:39px;height:39px;background:#250e15;border:1px solid #ae3344;color:#fff;display:grid;place-items:center;transition:background .2s}.dialog-close:hover{background:#b21d2d}.dialog-close svg{width:20px;height:20px}.dialog-panel h3{font:900 clamp(34px,4vw,56px)/.9 var(--display);margin:15px 0 20px}.dialog-panel video{width:100%;max-height:min(69vh,570px);background:#000;object-fit:contain;display:block;border:1px solid #3f1d29}.dialog-note{font-size:11px;color:#b9a3a7;margin:15px 0 0;line-height:1.6}
 /* RTL Arabic */
@@ -489,8 +493,6 @@ img,video{max-width:100%}
   .service-card{padding:13px 10px!important}
 }
 
-.video-dialog.portrait-project #youtubePlayer{max-height:min(68vh,650px)}
-@media(max-width:680px){.video-dialog.portrait-project #youtubePlayer{height:min(54dvh,540px)}}
 </style>
 </head>
 <body>
@@ -730,18 +732,33 @@ img,video{max-width:100%}
 
 <footer class="footer"><div class="shell footer-content"><div><a class="brand" href="#top"><span class="brand-mark">JV<span class="brand-strike"></span></span><span class="brand-copy"><strong>JOEX<span>_</span>VISUALS</strong><small>VIDEO EDITOR / YOUSEF AFIFI</small></span></a><p>Cinematic video editing for creators, brands and modern campaigns.</p></div><div><h4>EXPLORE</h4><a href="#top">Home</a><a href="#about">About</a><a href="#services">Services</a><a href="#projects">Portfolio</a></div><div><h4>CREATIVE SERVICES</h4><a href="#services">AI Editing</a><a href="#services">Speed Ramp</a><a href="#services">Reels & After Effects</a></div><div><h4>LET'S WORK TOGETHER</h4><p>Have a video in mind? Tell me what you are creating.</p><a class="footer-email" href="mailto:joeafifi840@gmail.com?subject=Joex_Visuals%20Project%20Inquiry">joeafifi840@gmail.com</a><a class="footer-gmail" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=joeafifi840%40gmail.com&amp;su=Joex_Visuals%20Project%20Inquiry" target="_blank" rel="noopener noreferrer" aria-label="Write to Yousef Afifi using Gmail"><svg aria-hidden="true"><use href="#i-mail"/></svg>WRITE VIA GMAIL <svg aria-hidden="true"><use href="#i-up"/></svg></a><a class="footer-whatsapp" href="https://wa.me/201010190532?text=Hi%20Yousef%2C%20I%27d%20like%20to%20discuss%20a%20video%20editing%20project." target="_blank" rel="noopener noreferrer" aria-label="Chat with Yousef Afifi on WhatsApp"><svg aria-hidden="true"><use href="#i-whatsapp"/></svg><span>WhatsApp: +20 101 019 0532</span></a><a class="footer-contact" href="#contact"><span>START A PROJECT</span><svg><use href="#i-up"/></svg></a></div></div><div class="shell footer-bottom"><span>© <span id="currentYear">2026</span> JOEX_VISUALS / YOUSEF AFIFI</span><span>CRAFTED FOR THE NEXT FRAME.</span><a href="#top">BACK TO TOP ↑</a></div></footer>
 
-<div class="video-dialog" id="videoDialog" role="dialog" aria-modal="true" aria-labelledby="videoTitle" aria-hidden="true"><div class="dialog-backdrop" data-close-video></div><div class="dialog-panel"><div class="dialog-header"><span class="eyebrow" id="videoKind">ORIGINAL PROJECT</span><button type="button" class="dialog-close" id="closeVideo" aria-label="Close video preview"><svg><use href="#i-close"/></svg></button></div><h3 id="videoTitle">JOEX_VISUALS / SHOWREEL</h3><video id="videoPlayer" controls playsinline preload="none"></video><iframe id="youtubePlayer" title="YouTube project video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" loading="lazy" style="display:none;width:100%;height:min(68vh,650px);aspect-ratio:9/16;background:#000;border:1px solid #3f1d29"></iframe><p class="dialog-note" id="videoNote">Original portfolio project. Fullscreen and playback controls available.</p></div></div>
+<div class="video-dialog" id="videoDialog" role="dialog" aria-modal="true" aria-labelledby="videoTitle" aria-hidden="true"><div class="dialog-backdrop" data-close-video></div><div class="dialog-panel"><div class="dialog-header"><span class="eyebrow" id="videoKind">ORIGINAL PROJECT</span><button type="button" class="dialog-close" id="closeVideo" aria-label="Close video preview"><svg><use href="#i-close"/></svg></button></div><h3 id="videoTitle">JOEX_VISUALS / SHOWREEL</h3><video id="videoPlayer" controls playsinline preload="none"></video>
+<iframe id="youtubePlayer" title="YouTube project video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin" style="display:none;width:100%;aspect-ratio:16/9;max-height:min(69vh,570px);border:1px solid #3f1d29;background:#000"></iframe><p class="dialog-note" id="videoNote">Original portfolio project. Fullscreen and playback controls available.</p></div></div>
 <script>
 'use strict';
 /* Client inquiries open Gmail compose in a new tab; no messages are sent automatically. */
 const CONTACT_EMAIL = 'joeafifi840@gmail.com';
 const ASSET_ROOT = 'assets/';
+const youtubeVideos = {
+  'edit-transformation.mp4': 'to87666y2Os',
+  'playful-moments.mp4': 'cxg6oBqrS8s',
+  'fashion-expo-highlights.mp4': 'PBjKOzjVdIM',
+  'event-promo.mp4': 'BLHCjHtRtN4',
+  'etihad-elwatan-replacement.mp4': 'Ev6Q8JvcRUY',
+  'cafe-promo.mp4': 'OlHaY-7KMCo',
+  'bentley-speed-ramp.mp4': 'I9L3cdnZXOU',
+  'ae-kinetic-typography.mp4': '7ftxzxsuLtw',
+  'gym-champion.mp4': 'LRW5Q65APow',
+  'rutva-living.mp4': 'S6GzI-mp8zA',
+  'property-before-after.mp4': 'xiU70ZRlPrc',
+  'nissan-speed-ramp.mp4': 'IxpFAh3IVLs',
+  'mg-speed-ramp.mp4': 'JpYHel5LB60'
+};
 const $ = (selector, from = document) => from.querySelector(selector);
 const $$ = (selector, from = document) => Array.from(from.querySelectorAll(selector));
 const dialog = $('#videoDialog');
 const player = $('#videoPlayer');
 const youtubePlayer = $('#youtubePlayer');
-const youtubeVideos = { 'edit-transformation.mp4': 'to87666y2Os' };
 const title = $('#videoTitle');
 const closeButton = $('#closeVideo');
 const videoKind = $('#videoKind');
@@ -755,14 +772,17 @@ function openVideo(fileName, displayTitle = 'JOEX_VISUALS / SHOWREEL') {
   previousFocus = document.activeElement;
   player.pause();
   const youtubeId = youtubeVideos[fileName];
-  youtubePlayer.src = 'about:blank';
-  youtubePlayer.style.display = youtubeId ? 'block' : 'none';
-  player.style.display = youtubeId ? 'none' : 'block';
   if (youtubeId) {
+    player.pause();
     player.removeAttribute('src');
     player.load();
-    youtubePlayer.src = 'https://www.youtube-nocookie.com/embed/' + youtubeId + '?autoplay=1&rel=0&playsinline=1';
+    player.style.display = 'none';
+    youtubePlayer.style.display = 'block';
+    youtubePlayer.src = `https://www.youtube-nocookie.com/embed/${youtubeId}?autoplay=1&rel=0&modestbranding=1`;
   } else {
+    youtubePlayer.removeAttribute('src');
+    youtubePlayer.style.display = 'none';
+    player.style.display = 'block';
     player.src = ASSET_ROOT + fileName;
     player.load();
   }
@@ -809,7 +829,9 @@ function closeVideo() {
   player.pause();
   player.removeAttribute('src');
   player.load();
-  youtubePlayer.src = 'about:blank';
+  youtubePlayer.removeAttribute('src');
+  youtubePlayer.style.display = 'none';
+  player.style.display = 'block';
   dialog.classList.remove('open');
   dialog.setAttribute('aria-hidden', 'true');
   document.body.classList.remove('modal-open');
@@ -822,7 +844,8 @@ window.addEventListener('keydown', event => {
   if (!dialog.classList.contains('open')) return;
   if (event.key === 'Escape') { event.preventDefault(); closeVideo(); }
   if (event.key === 'Tab') {
-    const focusable = [closeButton, youtubePlayer.style.display === 'block' ? youtubePlayer : player].filter(Boolean);
+    const activeMedia = youtubePlayer.style.display !== 'none' ? youtubePlayer : player;
+    const focusable = [closeButton, activeMedia].filter(Boolean);
     const index = focusable.indexOf(document.activeElement);
     if (event.shiftKey && index <= 0) { event.preventDefault(); focusable.at(-1).focus(); }
     else if (!event.shiftKey && index === focusable.length - 1) { event.preventDefault(); focusable[0].focus(); }
