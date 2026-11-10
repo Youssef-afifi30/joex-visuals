@@ -746,17 +746,17 @@ const youtubeVideos = {
   'etihad-elwatan.mp4': 'yXIKOFMYlns',
   'edit-transformation.mp4': 'to87666y2Os',
   'playful-moments.mp4': 'cxg6oBqrS8s',
-  'fashion-expo-highlights.mp4': 'PBjKOzjVdIM',
-  'event-promo.mp4': 'BLHCjHtRtN4',
-  'etihad-elwatan-replacement.mp4': 'Ev6Q8JvcRUY',
-  'cafe-promo.mp4': 'OlHaY-7KMCo',
-  'bentley-speed-ramp.mp4': 'I9L3cdnZXOU',
-  'ae-kinetic-typography.mp4': '7ftxzxsuLtw',
-  'gym-champion.mp4': 'LRW5Q65APow',
-  'rutva-living.mp4': 'S6GzI-mp8zA',
+  'fashion-expo-highlights.mp4': '7ftxzxsuLtw',
+  'event-promo.mp4': 'OlHaY-7KMCo',
+  'etihad-elwatan-replacement.mp4': 'I9L3cdnZXOU',
+  'cafe-promo.mp4': 'Ev6Q8JvcRUY',
+  'bentley-speed-ramp.mp4': 'BLHCjHtRtN4',
+  'ae-kinetic-typography.mp4': 'PBjKOzjVdIM',
+  'gym-champion.mp4': 'JpYHel5LB60',
+  'rutva-living.mp4': 'IxpFAh3IVLs',
   'property-before-after.mp4': 'xiU70ZRlPrc',
-  'nissan-speed-ramp.mp4': 'IxpFAh3IVLs',
-  'mg-speed-ramp.mp4': 'JpYHel5LB60'
+  'nissan-speed-ramp.mp4': 'S6GzI-mp8zA',
+  'mg-speed-ramp.mp4': 'LRW5Q65APow'
 };
 const $ = (selector, from = document) => from.querySelector(selector);
 const $$ = (selector, from = document) => Array.from(from.querySelectorAll(selector));
@@ -826,7 +826,9 @@ function openVideo(fileName, displayTitle = 'JOEX_VISUALS / SHOWREEL') {
   const uploadedInfo = uploadedProjectInfo[fileName];
   dialog.classList.toggle('portrait-project', Boolean(uploadedInfo) && !['clothing-store.mp4', 'etihad-elwatan.mp4', 'etihad-elwatan-replacement.mp4'].includes(fileName));
   videoKind.textContent = uploadedInfo ? uploadedInfo.kind : 'ORIGINAL PROJECT';
-  videoNote.textContent = uploadedInfo ? uploadedInfo.note : 'A selected editing project from the Joex_Visuals portfolio.';
+  videoNote.textContent = youtubeId
+    ? 'YouTube project video · Playback, sound and fullscreen are available. If embedding is unavailable, use the YouTube link below.'
+    : (uploadedInfo ? uploadedInfo.note : 'A selected editing project from the Joex_Visuals portfolio.');
 
   dialog.classList.add('open');
   dialog.setAttribute('aria-hidden', 'false');
